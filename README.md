@@ -1,54 +1,86 @@
-# Scaling the ToDo Application
+# Todo List Application with Docker Swarm
 
-This document provides instructions on how to scale the ToDo application services in a Docker Swarm environment.
+This is a simple Todo List application built with React, Node.js, Express, and PostgreSQL. It is designed to be easily deployed using Docker Swarm.
 
-## Scaling Services
+## Features
 
-To scale a service, use the following command:
+*   Create, read, update, and delete todos
+*   Responsive user interface
+*   Dockerized for easy deployment
 
-```
-docker service scale <service-name>=<number-of-replicas>
-```
+## Prerequisites
 
-For example, to scale the `api` service to 3 replicas, use the following command:
+*   Docker
+*   Docker Compose
 
-```
-docker service scale my-stack_api=3
-```
+## Getting Started
 
-To scale the `frontend` service to 5 replicas, use the following command:
+### 1. Clone the repository
 
-```
-docker service scale my-stack_frontend=5
-```
-
-To scale the `db` service to 2 replicas, use the following command:
-
-```
-docker service scale my-stack_db=2
+```bash
+git clone https://github.com/aadeelyounas/todolist-dockerswarm.git
+cd todolist-dockerswarm
 ```
 
-## Verifying the Scale
+### 2. Build the Docker images
 
-To verify the scale of a service, use the following command:
-
-```
-docker service ps <service-name>
+```bash
+docker-compose build
 ```
 
-For example, to verify the scale of the `api` service, use the following command:
+### 3. Run the application using Docker Compose
 
+```bash
+docker-compose up -d
 ```
-docker service ps my-stack_api
+
+This will start the application in detached mode. The frontend will be accessible at `http://localhost:3000`, and the backend API will be accessible at `http://localhost:3001`.
+
+### 4. Access the application
+
+Open your web browser and navigate to `http://localhost:3000` to access the Todo List application.
+
+## Docker Swarm Deployment (Optional)
+
+To deploy the application using Docker Swarm, follow these steps:
+
+### 1. Initialize a Docker Swarm
+
+If you don't already have a Docker Swarm initialized, run the following command:
+
+```bash
+docker swarm init
 ```
 
-This will show the status of each replica of the service.
+### 2. Deploy the application to the Swarm
 
-## Scaling Down Services
-
-To scale down a service, use the same command as above, but with a smaller number of replicas.
-
-For example, to scale the `api` service down to 1 replica, use the following command:
-
+```bash
+docker stack deploy -c docker-compose.yml todolist
 ```
-docker service scale my-stack_api=1
+
+This will deploy the application to the Docker Swarm.
+
+## Environment Variables
+
+The following environment variables are used by the application:
+
+*   `DATABASE_URL`: The connection string for the PostgreSQL database. This is used by the backend API.
+*   `POSTGRES_PASSWORD`: The password for the PostgreSQL database. This is used by the `db` service in the `docker-compose.yml` file.
+
+## API Endpoints
+
+The following API endpoints are available:
+
+*   `GET /todos`: Get all todos
+*   `POST /todos`: Create a new todo
+*   `PUT /todos/:id`: Update a todo
+*   `DELETE /todos/:id`: Delete a todo
+*   `GET /health`: Health check endpoint
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a pull request.
+
+## License
+
+[MIT](https://opensource.org/licenses/MIT)
